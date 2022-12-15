@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import LoginContext from "../Context/Login/LoginContext";
 import ExpenseForm from "./ExpenseForm";
 import './NewExpense.css'
 
 const NewExpense = (props) => {
+    const isLogged = useContext(LoginContext);
     const [isAddExpense, setIsAddExpense] = useState(false);
 
     const saveExpenseDataHandler = (enteredExpenseData) => {
@@ -18,9 +20,14 @@ const NewExpense = (props) => {
     const cancelExpenseDataHandler = () => {
         setIsAddExpense(false);
     } 
-
+    const addExpenseButtonHandler = () => {
+        if(isLogged.loggedState)
+            setIsAddExpense(true)
+        else
+            alert('Please login')
+    }
     const addExpenseButton = <div className="new-expense__action">
-                                <button onClick={()=>{setIsAddExpense(true)}}>Add Expense</button>
+                                <button onClick={addExpenseButtonHandler}>Add Expense</button>
                             </div>
     return (
         <div className='new-expense'>
