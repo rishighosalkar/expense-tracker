@@ -1,0 +1,74 @@
+.container{  
+    display: flex;
+    background-color: #92eebb; /*#a892ee;*/
+    padding: 2rem 1rem;
+    margin: 2rem auto;
+    width: 35rem;
+    justify-content: center;
+    align-items: center;
+    max-width: 95%;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.login__controls {
+    display: inline-block;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+.login__control{
+    margin: 10px;
+}
+  .login__control label {
+    display: inline-flex;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    /* display: block; */
+  }
+  
+  .login__control input {
+    font: inherit;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    /* width: 20rem; */
+    max-width: 100%;
+  }
+  
+  .login__actions {
+    display: flex;
+  }
+
+  .login__controls button {
+    display: block;
+    font: inherit;
+    cursor: pointer;
+    padding: 1rem 1rem;
+    border: 1px solid #2a593f /*#40005d*/;
+    background-color: #2a593f /*#40005d */;
+    color: white;
+    border-radius: 12px;
+    margin-right: 1rem;
+  }
+  
+  .login__controls button:hover,
+  .login__controls button:active {
+    background-color: #510674;
+    border-color: #510674;
+  }
+  
+  .login__controls button.alternative {
+    color: #220131;
+    border-color: transparent;
+    background-color: transparent;
+  }
+  
+  .login__controls button.alternative:hover,
+  .login__controls button.alternative:active {
+    background-color: #ddb3f8;
+  }
