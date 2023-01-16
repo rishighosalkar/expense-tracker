@@ -36,8 +36,11 @@ const dummyData = [
 ]
 function App() {
   const [expenses, setExpenses] = useState(dummyData);
-  const loggedState = useContext(LoginContext);
-
+  const ctx = useContext(LoginContext);
+  if(localStorage.getItem('isLoggedIn') === 1)
+  {
+    ctx.onLogin();
+  }
   const addExpenseHandler = (enteredEpenseData) => {
     setExpenses(prevExpenses => {
       return [enteredEpenseData, ...prevExpenses]
@@ -53,11 +56,12 @@ function App() {
         {/* <NewExpense onAddExpenseData = {addExpenseHandler}/> */}
         {/* <Signup /> */}
         <Routes>
-          <Route exact path='/' element={<NewExpense onAddExpenseData = {addExpenseHandler}/>}></Route>
+          {/* <Route exact path='/' element={<NewExpense onAddExpenseData = {addExpenseHandler}/>}></Route> */}
+          <Route exact path='/' element={<Expenses items={expenses}/>}></Route>
           <Route exact path='/signup' element={<Signup />}></Route>
           <Route path='/login' element={<Login />}></Route>
         </Routes>
-        {loggedState.loggedState && <Expenses items={expenses} />}
+        {/* {loggedState.loggedState && <Expenses items={expenses} />} */}
       </div>
   );
 }

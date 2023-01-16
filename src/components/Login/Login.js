@@ -13,14 +13,48 @@ const Login = () => {
     const passwordInputRef = useRef();
 
     const [users, setUsers] = useState([]);
-    const isLogged = useContext(LoginContext);
+    const [userExpenseData, setUserExpenseData] = useState([]);
+    const ctx = useContext(LoginContext);
 
-    useEffect(()=>axios.get('http://localhost:8081/user')
-    .then((res)=> {
-        setUsers(res.data);
-        console.log(res.data);
-        })
-    .catch((err)=> console.log(err)), []);
+    useEffect(()=>{
+        const fetchData = async () => {
+            const res = await axios.get('http://localhost:8081/user')
+            console.log('ResponseData',res.data)
+            const resData = await res.data;
+            const laodedData = [];
+            for(const key in resData)
+            {
+                console.log('LoginUsersKeys',resData[key].username);
+                laodedData.push({
+                    _id:resData[key]._id,
+                    username: resData[key].username,
+                    password: resData[key].password,
+                    fName: resData[key].fName,
+                    lName: resData[key].lName,
+                    mobileNumber: resData[key].mobileNumber,
+                    dateOfBirth: resData[key].dateOfBirth
+                })   
+            }
+            setUsers(laodedData);
+
+            const expenseRes = await axios.get('http://localhost:8081/expense/');
+            const expenseResData = expenseRes.data;
+            console.log("EXPENSEKEY", expenseResData.data)
+            const loadedExpenseData = [];
+            for(const key in expenseResData)
+            {
+                //console.log("EXPENSEKEY", expenseResData[key].user_id)
+                loadedExpenseData.push({
+                    user_id: expenseResData[key].user_id,
+                    title: expenseResData[key].title,
+                    date: expenseResData[key].date,
+                    amount: expenseResData[key].amount,
+                })
+            }
+            setUserExpenseData(loadedExpenseData);
+        }
+        fetchData()
+    }, []);
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -37,13 +71,15 @@ const Login = () => {
                     navigate('/login');
                 }
                 else{
-                    isLogged.updateLoggedState();
-                    navigate('/');
+                    const expenseData = userExpenseData.filter(data => data.user_id === userData._id);
+                    console.log('USEREXPENSEDATA',expenseData)
+                    ctx.onLogin(userData._id, expenseData);
+                    navigate('/', {state : {user_id: userData._id}});
                 }
             })
             console.log("Login userdata", userData);
         })
-        console.log("In login",isLogged.loggedState)  
+        //console.log("In login",isLogged.loggedState)  
     }
     
     const navigateToSignup = (e) => {

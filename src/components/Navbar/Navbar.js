@@ -4,19 +4,23 @@ import LoginContext from "../Context/Login/LoginContext";
 
 const Navbar = () => {
 
-    const isLogged = useContext(LoginContext);
+    const ctx = useContext(LoginContext);
     let loggedState = 'Log in'
     const navigate = useNavigate();
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
     const navigateToLogin = () => {
-        if(loggedState === 'Log out')
+        if(isLoggedIn === '1')
         {
             navigate('/');
-            isLogged.updateLoggedState();
+            ctx.onLogout();
+            //localStorage.clear()
         }
-        else navigate('/login');
+        else {
+            navigate('/login');
+        }
     }
 
-    if(isLogged.loggedState)
+    if(isLoggedIn === '1')
     {  
         loggedState = 'Log out';
     }

@@ -1,18 +1,24 @@
 import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import LoginContext from "../Context/Login/LoginContext";
 import ExpenseForm from "./ExpenseForm";
 import './NewExpense.css'
 
 const NewExpense = (props) => {
-    const isLogged = useContext(LoginContext);
     const [isAddExpense, setIsAddExpense] = useState(false);
-
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    // const location = useLocation();
+    // console.log(location.state.user_id);
+    
     const saveExpenseDataHandler = (enteredExpenseData) => {
+        const usr_id = localStorage.getItem('userId');
+        console.log(enteredExpenseData.date)
         const expenseData = {
-            ...enteredExpenseData,
-            id: Math.random().toString()
+            user_id: usr_id,
+            ...enteredExpenseData
         };
-        console.log("NewExpense.js",expenseData);
+        
+        console.log("NewExpense.js",expenseData.date);
         props.onAddExpenseData(expenseData);
         setIsAddExpense(false);
     } 
@@ -21,7 +27,7 @@ const NewExpense = (props) => {
         setIsAddExpense(false);
     } 
     const addExpenseButtonHandler = () => {
-        if(isLogged.loggedState)
+        if(isLoggedIn)
             setIsAddExpense(true)
         else
             alert('Please login')

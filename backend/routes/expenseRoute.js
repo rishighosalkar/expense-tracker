@@ -11,11 +11,13 @@ router.get('/',(req, res) => {
 
 router.post('/',(req, res) =>
 {
+    const user_id = req.body.user_id;
     const title = req.body.title;
     const date = req.body.date;
     const amount = req.body.amount;
 
     const newExpense = new Expense({
+        user_id,
         title,
         date,
         amount
