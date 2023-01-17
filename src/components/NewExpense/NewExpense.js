@@ -1,6 +1,4 @@
-import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
-import LoginContext from "../Context/Login/LoginContext";
+import React, { useState } from "react";
 import ExpenseForm from "./ExpenseForm";
 import './NewExpense.css'
 

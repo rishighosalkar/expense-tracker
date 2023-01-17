@@ -13,7 +13,6 @@ const Login = () => {
     const passwordInputRef = useRef();
 
     const [users, setUsers] = useState([]);
-    const [userExpenseData, setUserExpenseData] = useState([]);
     const ctx = useContext(LoginContext);
 
     useEffect(()=>{
@@ -36,22 +35,6 @@ const Login = () => {
                 })   
             }
             setUsers(laodedData);
-
-            const expenseRes = await axios.get('http://localhost:8081/expense/');
-            const expenseResData = expenseRes.data;
-            console.log("EXPENSEKEY", expenseResData.data)
-            const loadedExpenseData = [];
-            for(const key in expenseResData)
-            {
-                //console.log("EXPENSEKEY", expenseResData[key].user_id)
-                loadedExpenseData.push({
-                    user_id: expenseResData[key].user_id,
-                    title: expenseResData[key].title,
-                    date: expenseResData[key].date,
-                    amount: expenseResData[key].amount,
-                })
-            }
-            setUserExpenseData(loadedExpenseData);
         }
         fetchData()
     }, []);
@@ -71,15 +54,12 @@ const Login = () => {
                     navigate('/login');
                 }
                 else{
-                    const expenseData = userExpenseData.filter(data => data.user_id === userData._id);
-                    console.log('USEREXPENSEDATA',expenseData)
-                    ctx.onLogin(userData._id, expenseData);
+                    ctx.onLogin(userData._id);
                     navigate('/', {state : {user_id: userData._id}});
                 }
             })
             console.log("Login userdata", userData);
         })
-        //console.log("In login",isLogged.loggedState)  
     }
     
     const navigateToSignup = (e) => {

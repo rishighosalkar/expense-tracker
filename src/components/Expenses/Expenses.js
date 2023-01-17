@@ -9,20 +9,36 @@ import NewExpense from "../NewExpense/NewExpense";
 import LoginContext from "../Context/Login/LoginContext";
 
 const Expenses = (props) => {
-    //console.log("Expense.js",props.items)
     const ctx = useContext(LoginContext);
     const [selectedYear, setSelectedYear] = useState('All');
-    const [expenses, setExpenses] = useState([]);
-    const temp =  localStorage.getItem('userData');
     const [userData, setUserData] = useState([]);
-    const {usersExpenseData} = ctx;
-    const [isAddExpense, setIsAddExpense] = useState(false);
     const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const {usersExpenseData} = ctx;
     useEffect(()=>{
-        const user_id = localStorage.getItem('userId');
-        console.log('InExpensesUseEffect', ctx.usersExpenseData);
-        setUserData(usersExpenseData);
-    }, [usersExpenseData]);
+        const fetchData = async () => {
+            const expenseRes = await axios.get('http://localhost:8081/expense/');
+            const expenseResData = expenseRes.data;
+            console.log("EXPENSEKEY", expenseResData.data)
+            const loadedExpenseData = [];
+            const usr_id = localStorage.getItem('userId');
+            for(const key in expenseResData)
+            {
+                //console.log("EXPENSEKEY", expenseResData[key].user_id)
+                if(expenseResData[key].user_id === usr_id)
+                {
+                    loadedExpenseData.push({
+                        user_id: expenseResData[key].user_id,
+                        title: expenseResData[key].title,
+                        date: expenseResData[key].date,
+                        amount: expenseResData[key].amount,
+                    })
+                }
+            }
+            setUserData(loadedExpenseData);
+        }
+        if(isLoggedIn)
+            fetchData();
+    }, [usersExpenseData, isLoggedIn]);
     
     const addExpenseHandler = async (enteredEpenseData) => {
         const temp = enteredEpenseData.date;
@@ -35,12 +51,14 @@ const Expenses = (props) => {
         await axios.post('http://localhost:8081/expense/', enteredEpenseData)
             .then((res) => {
                 console.log('NewUserExpenseData', res.data);
-                //ctx.addExpenseSuccHandler(true);
                 res = true;
             })
         .catch((err) => console.log(err));
         enteredEpenseData.date = temp;
-        ctx.onAddExpense(enteredEpenseData);
+        setUserData(prevExpenses => {
+                return [enteredEpenseData, ...prevExpenses]
+        })
+        console.log('InAddExpenseExpensejs', userData);
     }
     const filterHandler = (year) => {
         setSelectedYear(year);
