@@ -13,30 +13,14 @@ const Login = () => {
     const passwordInputRef = useRef();
 
     const [users, setUsers] = useState([]);
-    const [firebaseUsers, setFirebaseUsers] = useState([]);
     const ctx = useContext(LoginContext);
 
     useEffect(()=>{
         const fetchData = async () => {
             const res = await axios.get('http://localhost:8081/user')
-            const res1 = await axios.get('https://expense-tracker-3406d-default-rtdb.firebaseio.com/users.json')
             console.log('ResponseData',res1.data)
             const resData = await res.data;
             const loadedData = [];
-            const loadedDataFireBase = [];
-            for(const key in res1.data)
-            {
-                console.log('LoginUsersKeys',res1.data[key].username + ' ' + key+' '+res1.data[key].mobileNumber); 
-                loadedDataFireBase.push({
-                    _id:key,
-                    username: res1.data[key].username,
-                    password: res1.data[key].password,
-                    fName: res1.data[key].fName,
-                    lName: res1.data[key].lName,
-                    mobileNumber: res1.data[key].mobileNumber,
-                    dateOfBirth: res1.data[key].dateOfBirth
-                })  
-            }
             for(const key in resData)
             {
                 //console.log('LoginUsersKeys',resData[key].username);
@@ -51,7 +35,6 @@ const Login = () => {
                 })   
             }
             setUsers(loadedData);
-            setFirebaseUsers(loadedDataFireBase);
         }
         fetchData()
     }, []);

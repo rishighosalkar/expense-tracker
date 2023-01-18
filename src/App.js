@@ -1,10 +1,10 @@
 import './App.css';
-import Expenses from './components/Expenses/Expenses';
+//import Expenses from './components/Expenses/Expenses';
 import ExpensesFirebase from './components/Expenses/Firebase/ExpensesFirebase';
-import Login from './components/Login/Login';
+//import Login from './components/Login/Login';
 import LoginFirebase from './components/Login/Firebase/LoginFirebase';
 import Navbar from './components/Navbar/Navbar';
-import Signup from './components/SignUp/Signup';
+// import Signup from './components/SignUp/Signup';
 import SignupFirebase from './components/SignUp/Firebase/SignupFirebase';
 import { Routes, Route } from 'react-router-dom';
 

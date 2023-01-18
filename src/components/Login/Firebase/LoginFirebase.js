@@ -18,7 +18,7 @@ const LoginFirebase = () => {
     useEffect(()=>{
         const fetchData = async () => {
             const res = await axios.get('https://expense-tracker-3406d-default-rtdb.firebaseio.com/users.json')
-            console.log('ResponseData',res.data)
+            //console.log('ResponseData',res.data)
             const resData = await res.data;
             const loadedData = [];
             for(const key in resData)

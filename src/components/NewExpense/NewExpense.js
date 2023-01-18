@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpenseForm from "./ExpenseForm";
 import './NewExpense.css'
 
 const NewExpense = (props) => {
     const [isAddExpense, setIsAddExpense] = useState(false);
+    const [showForm, setShowForm] = useState(false);
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     // const location = useLocation();
     // console.log(location.state.user_id);
-    
+    useEffect(()=>{
+        if(isLoggedIn === '1')
+            setShowForm(true);
+        else
+            setShowForm(false);
+    }, [isLoggedIn])
     const saveExpenseDataHandler = (enteredExpenseData) => {
+        if(!(isLoggedIn === '1'))
+            return alert('Please login!');
         const usr_id = localStorage.getItem('userId');
-        console.log(enteredExpenseData.date)
+        //console.log(enteredExpenseData.date)
         const expenseData = {
             user_id: usr_id,
             ...enteredExpenseData
         };
         
-        console.log("NewExpense.js",expenseData.date);
+        //console.log("NewExpense.js",expenseData.date);
         props.onAddExpenseData(expenseData);
         setIsAddExpense(false);
     } 
@@ -35,7 +43,7 @@ const NewExpense = (props) => {
                             </div>
     return (
         <div className='new-expense'>
-            {isAddExpense ? <ExpenseForm onCancel={cancelExpenseDataHandler} 
+            {(isAddExpense && showForm) ? <ExpenseForm onCancel={cancelExpenseDataHandler} 
             onSaveExpenseData={saveExpenseDataHandler}/> : addExpenseButton}   
         </div>
     )

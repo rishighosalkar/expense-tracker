@@ -15,33 +15,34 @@ const Expenses = (props) => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     const {usersExpenseData} = ctx;
     useEffect(()=>{
-        const fetchData = async () => {
-            const expenseRes = await axios.get('http://localhost:8081/expense/');
-            const expenseResData = expenseRes.data;
-            const loadedExpenseData = [];
-            const usr_id = localStorage.getItem('userId');
-            for(const key in expenseResData)
-            {
-                //console.log("EXPENSEKEY", expenseResData[key].user_id)
-                if(expenseResData[key].user_id === usr_id)
-                {
-                    loadedExpenseData.push({
-                        _id: expenseResData[key]._id,
-                        user_id: expenseResData[key].user_id,
-                        title: expenseResData[key].title,
-                        date: expenseResData[key].date,
-                        amount: expenseResData[key].amount,
-                    })
-                }
-            }
-            setUserData(loadedExpenseData);
-        }
         if(isLoggedIn)
         {
             fetchData()
         }
     }, [usersExpenseData, isLoggedIn]);
     
+    const fetchData = async () => {
+        const expenseRes = await axios.get('http://localhost:8081/expense/');
+        const expenseResData = expenseRes.data;
+        const loadedExpenseData = [];
+        const usr_id = localStorage.getItem('userId');
+        for(const key in expenseResData)
+        {
+            //console.log("EXPENSEKEY", expenseResData[key].user_id)
+            if(expenseResData[key].user_id === usr_id)
+            {
+                loadedExpenseData.push({
+                    _id: expenseResData[key]._id,
+                    user_id: expenseResData[key].user_id,
+                    title: expenseResData[key].title,
+                    date: expenseResData[key].date,
+                    amount: expenseResData[key].amount,
+                })
+            }
+        }
+        setUserData(loadedExpenseData);
+    }
+
     const addExpenseHandler = async (enteredEpenseData) => {
         const temp = enteredEpenseData.date;
         const day = new Date(enteredEpenseData.date).getDate();
@@ -57,9 +58,10 @@ const Expenses = (props) => {
             })
         .catch((err) => console.log(err));
         enteredEpenseData.date = temp;
-        setUserData(prevExpenses => {
-                return [enteredEpenseData, ...prevExpenses]
-        })
+        fetchData();
+        // setUserData(prevExpenses => {
+        //         return [enteredEpenseData, ...prevExpenses]
+        // })
         //console.log('InAddExpenseExpensejs', userData);
     }
     const filterHandler = (year) => {

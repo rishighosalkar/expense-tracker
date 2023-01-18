@@ -8,15 +8,16 @@ const SignupFirebase = (props) => {
 
     const navigate = useNavigate();
     const saveUserDataHandler = (enteredUserData) => {
-        const userData = JSON.stringify(enteredUserData);
-        console.log("Signup.js",userData);
+        //const userData = JSON.stringify(enteredUserData);
+        //console.log("Signup.js",userData);
         axios.post('https://expense-tracker-3406d-default-rtdb.firebaseio.com/users.json', enteredUserData)
             .then((res) => {
                 navigate('/');
-                console.log(res);
+                //console.log(res);
             })
             .catch((err) => {
-                console.log(err);
+                //console.log(err);
+                alert(err);
                 navigate('/signup');
             });
     } 
