@@ -8,15 +8,14 @@ const Signup = (props) => {
 
     const navigate = useNavigate();
     const saveUserDataHandler = (enteredUserData) => {
-        const userData = JSON.stringify(enteredUserData);
-        console.log("Signup.js",userData);
+        //const userData = JSON.stringify(enteredUserData);
+        //console.log("Signup.js",userData);
         axios.post('http://localhost:8081/user', enteredUserData)
             .then((res) => {
                 navigate('/');
-                console.log(res);
             })
             .catch((err) => {
-                console.log(err);
+                alert(err);
                 navigate('/signup');
             });
     } 

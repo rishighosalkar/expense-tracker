@@ -18,7 +18,7 @@ const Login = () => {
     useEffect(()=>{
         const fetchData = async () => {
             const res = await axios.get('http://localhost:8081/user')
-            console.log('ResponseData',res1.data)
+            //console.log('ResponseData',res1.data)
             const resData = await res.data;
             const loadedData = [];
             for(const key in resData)

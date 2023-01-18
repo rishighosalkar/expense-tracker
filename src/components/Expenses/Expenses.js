@@ -50,10 +50,10 @@ const Expenses = (props) => {
         const year = new Date(enteredEpenseData.date).getFullYear();
         const date = month+'/'+day+'/'+year;
         enteredEpenseData.date = date;
-        console.log(date);
+        //console.log(date);
         await axios.post('http://localhost:8081/expense/', enteredEpenseData)
             .then((res) => {
-                console.log('NewUserExpenseData', res.data);
+                //console.log('NewUserExpenseData', res.data);
                 res = true;
             })
         .catch((err) => console.log(err));
