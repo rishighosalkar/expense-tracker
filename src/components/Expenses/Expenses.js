@@ -18,7 +18,6 @@ const Expenses = (props) => {
         const fetchData = async () => {
             const expenseRes = await axios.get('http://localhost:8081/expense/');
             const expenseResData = expenseRes.data;
-            console.log("EXPENSEKEY", expenseResData.data)
             const loadedExpenseData = [];
             const usr_id = localStorage.getItem('userId');
             for(const key in expenseResData)
@@ -27,6 +26,7 @@ const Expenses = (props) => {
                 if(expenseResData[key].user_id === usr_id)
                 {
                     loadedExpenseData.push({
+                        _id: expenseResData[key]._id,
                         user_id: expenseResData[key].user_id,
                         title: expenseResData[key].title,
                         date: expenseResData[key].date,
@@ -37,7 +37,9 @@ const Expenses = (props) => {
             setUserData(loadedExpenseData);
         }
         if(isLoggedIn)
-            fetchData();
+        {
+            fetchData()
+        }
     }, [usersExpenseData, isLoggedIn]);
     
     const addExpenseHandler = async (enteredEpenseData) => {
@@ -58,7 +60,7 @@ const Expenses = (props) => {
         setUserData(prevExpenses => {
                 return [enteredEpenseData, ...prevExpenses]
         })
-        console.log('InAddExpenseExpensejs', userData);
+        //console.log('InAddExpenseExpensejs', userData);
     }
     const filterHandler = (year) => {
         setSelectedYear(year);
@@ -66,12 +68,10 @@ const Expenses = (props) => {
     
     if(isLoggedIn) 
     {
-        //setUserData(usersExpenseData)
         if(userData === [])
             return (<> <NewExpense onAddExpenseData = {addExpenseHandler}/>
             <h2 className="expenses-list__fallback">No data found.</h2> </>)
     }
-
     const filteredExpenses= (userData ? userData.filter(expense => {
         return new Date(expense.date).getFullYear().toString() === selectedYear || selectedYear === 'All'
     }) : []);

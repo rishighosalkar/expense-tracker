@@ -21,7 +21,7 @@ export default function ExpenseDate(props) {
     const month = new Date(props.date).getMonth()+1;
     //const month = props.date.toLocaleString('en-US', {month: 'long'});
     const year = new Date(props.date).getFullYear();
-    console.log('Month',new Date(props.date).getMonth())
+    //console.log('Month',new Date(props.date).getMonth())
     return (
         <div className = "expense-date">
             <div className = "expense-date__month">{month}</div>

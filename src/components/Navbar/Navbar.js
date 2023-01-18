@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginContext from "../Context/Login/LoginContext";
+import './Navbar.css';
 
 const Navbar = () => {
 
@@ -25,10 +26,12 @@ const Navbar = () => {
         loggedState = 'Log out';
     }
     return(
-        <div>
-          <button onClick={navigateToLogin}>
-              {loggedState}
-          </button>
+        <div className="navbar-item">
+            <div className="navbar-item__actions">
+                <button onClick={navigateToLogin}>
+                    {loggedState}
+                </button>
+            </div>
         </div>
     )
 }

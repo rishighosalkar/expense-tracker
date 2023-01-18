@@ -18,12 +18,12 @@ const Login = () => {
     useEffect(()=>{
         const fetchData = async () => {
             const res = await axios.get('http://localhost:8081/user')
-            console.log('ResponseData',res.data)
+            //console.log('ResponseData',res.data)
             const resData = await res.data;
             const laodedData = [];
             for(const key in resData)
             {
-                console.log('LoginUsersKeys',resData[key].username);
+                //console.log('LoginUsersKeys',resData[key].username);
                 laodedData.push({
                     _id:resData[key]._id,
                     username: resData[key].username,
@@ -43,7 +43,7 @@ const Login = () => {
         e.preventDefault();
         const username = usernameInputRef.current.value;
         const password = passwordInputRef.current.value;
-        console.log(users)
+        //console.log(users)
         users.filter((userData) =>{ 
         return userData.username === username}
         ).map((userData) => (
