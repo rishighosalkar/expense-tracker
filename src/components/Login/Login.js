@@ -46,7 +46,7 @@ const Login = () => {
         console.log(users)
         users.filter((userData) =>{ 
         return userData.username === username}
-        ).map(userData => {
+        ).map((userData) => (
             bcrypt.compare(password, userData.password, (err, isMatch) => {
                 if(err) throw err
                 else if(!isMatch){
@@ -58,8 +58,8 @@ const Login = () => {
                     navigate('/', {state : {user_id: userData._id}});
                 }
             })
-            console.log("Login userdata", userData);
-        })
+            //console.log("Login userdata", userData);
+        ))
     }
     
     const navigateToSignup = (e) => {
