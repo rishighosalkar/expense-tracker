@@ -11,7 +11,8 @@ const LoginState = (props) => {
         localStorage.setItem('userId', user_id);
         localStorage.setItem('isLoggedIn', '1');
         const fetchData = async () => {
-            const expenseRes = await axios.get('http://localhost:8081/expense/');
+            //const expenseRes = await axios.get('http://localhost:8081/expense/');
+            const expenseRes = await axios.get('https://expense-tracker-3406d-default-rtdb.firebaseio.com/expenses.json');
             const expenseResData = expenseRes.data;
             console.log("EXPENSEKEY", expenseResData.data)
             const loadedExpenseData = [];
